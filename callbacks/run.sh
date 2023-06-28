@@ -7,7 +7,7 @@ set -e
 gcc -o ./SOURCE.interval/btx_source.so \
     ./SOURCE.interval/*.c \
     ./SOURCE.interval/metababel/*.c \
-    -I ./include -I ./SOURCE.interval/ \
+    -I ../include -I ./SOURCE.interval/ \
     $(pkg-config --cflags babeltrace2) $(pkg-config --libs babeltrace2) -Wall -Werror -fpic --shared
 
 babeltrace2 --plugin-path=SOURCE.interval \
@@ -19,7 +19,7 @@ babeltrace2 --plugin-path=SOURCE.interval \
 gcc -o ./FILTER.interval/btx_filter.so \
     ./FILTER.interval/*.c \
     ./FILTER.interval/metababel/*.c \
-    -I ./include -I ./FILTER.interval/ \
+    -I ../include -I ./FILTER.interval/ \
     $(pkg-config --cflags babeltrace2) $(pkg-config --libs babeltrace2) -Wall -Werror -fpic --shared
 
 babeltrace2 --plugin-path=SOURCE.interval:FILTER.interval  \
