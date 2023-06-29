@@ -5,6 +5,12 @@
 
 void usr_matching_condition(
   void *btx_handle, void *usr_data, const char* event_class_name, bool *matched) {
+    *matched = true;
+}
+
+void usr_conditional_callback(
+  void *btx_handle, void *usr_data, const char* event_class_name) {
+
     // Common Context Fields
     int64_t _vpid;
     uint64_t _vtid;
@@ -49,14 +55,7 @@ void usr_matching_condition(
       assert((succeed ==  true) &&  "Member not found 'dur'.");
     }
 
-    printf("urs_matching_condition\n");
-
-    *matched = false;
-}
-
-void usr_conditional_callback(
-  void *btx_handle, void *usr_data, const char* event_class_name) {
-    printf("usr_conditional_callback\n");
+    printf("usr_conditional_callback: %ld, %ld, %ld, %ld, %ld\n", _vpid, _vtid, _ts, _backend, _dur);
 }
 
 void btx_register_usr_callbacks(void *btx_handle) {
