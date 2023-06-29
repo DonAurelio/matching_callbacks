@@ -37,10 +37,18 @@ struct el {
   struct el *next, *prev;
 };
 
+// NEW:
+typedef const char *
+matching_callbacks_event_dispatcher_f(void *btx_handle, void *usr_data, const char *event_class_name);
+
 // Struct stored in the component via `bt_self_component_set_data`
 struct common_data_s {
   name_to_dispatcher_t *name_to_dispatcher;
   name_to_dispatcher_t *name_to_matching_dispatcher;
+  // NEW: we need a function, defined by the user, that let us know 
+  // the stream class name of a given event, since it is not provided 
+  // by lttng but the model.yaml
+  matching_callbacks_event_dispatcher_f *matching_callbacks_event_dispatcher;
   /* NEW: We need to preserve the event to access the event's fields data from matching callbacks */
   const bt_event *current_event;
   void *usr_data;
@@ -116,6 +124,10 @@ void btx_register_callbacks_read_params(
 
 void btx_call_callbacks_read_params(
     common_data_t *common_data, void *, btx_params_t *);
+
+// NEW:
+void btx_register_matching_callbacks_event_dispatcher(
+    void *btx_handle, matching_callbacks_event_dispatcher_f *dispatcher);
 
 #ifdef __cplusplus
 }

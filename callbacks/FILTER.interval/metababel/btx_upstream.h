@@ -39,30 +39,6 @@ void btx_register_matching_callback_test_stream_class(
 
 void btx_delete_matching_dispatchers(common_data_t *common_data);
 
-// NEW:
-void btx_event_get_common_context_member_field_by_name_const(
-  void *btx_handle, const char *name, const bt_field **event_cc_f_m, bool *succeed);
-
-// NEW:
-void btx_event_common_context_field_integer_signed_get_value(
-  void *btx_handle, const char *name, int64_t *value, bool *succeed);
-
-// NEW:
-void btx_event_common_context_field_integer_unsigned_get_value(
-  void *btx_handle, const char *name, uint64_t *value, bool *succeed);
-
-// NEW:
-void btx_event_common_context_field_string_get_value(
-  void *btx_handle, const char *name, const char *value, bool *succeed);
-
-// NEW:
-void btx_event_get_payload_field_by_name_const(
-  void *btx_handle, const char *name, const bt_field **event_cc_f_m, bool *succeed);
-
-// NEW:
-void btx_event_payload_field_integer_unsigned_get_value(
-    void *btx_handle, const char *name, uint64_t *value, bool *succeed);
-
 #ifdef __cplusplus
 }
 #endif

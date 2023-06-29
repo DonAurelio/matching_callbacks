@@ -162,18 +162,25 @@ filter_message_iterator_next_processing_reading(
     }
 
     {
-      const bt_stream_class *stream_class =
-          bt_event_class_borrow_stream_class_const(event_class);
-      const char *stream_class_name = bt_stream_class_get_name(stream_class);
+      // const bt_stream_class *stream_class =
+      //     bt_event_class_borrow_stream_class_const(event_class);
+      // const char *stream_class_name = bt_stream_class_get_name(stream_class);
 
-      name_to_dispatcher_t *s = NULL;
-      HASH_FIND_STR(common_data->name_to_matching_dispatcher, stream_class_name,
-                    s);
-      if (s) {
-        // is_callback_called will only be modified if at least one callback is
-        // called.
-        (*((dispatcher_t(*))(s->dispatcher)))(s->callbacks, common_data, upstream_message,
-                                              &is_callback_called);
+      // NEW: New the use is in charge of provide the stream class name of every event.
+      if(common_data->matching_callbacks_event_dispatcher){
+
+          const char *stream_class_name = (common_data->matching_callbacks_event_dispatcher)(
+            (void *)common_data, common_data->usr_data, class_name);
+
+          name_to_dispatcher_t *s = NULL;
+          HASH_FIND_STR(common_data->name_to_matching_dispatcher, stream_class_name,
+                        s);
+          if (s) {
+            // is_callback_called will only be modified if at least one callback is
+            // called.
+            (*((dispatcher_t(*))(s->dispatcher)))(s->callbacks, common_data, upstream_message,
+                                                  &is_callback_called);
+          }
       }
     }
 

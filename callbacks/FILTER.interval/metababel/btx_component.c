@@ -13,7 +13,6 @@ void btx_populate_params(common_data_t *common_data) {
   (void)usr_params;
 }
 
-
 typedef void btx_dispatch_initialize_usr_data_f(
     UT_array *callbacks, common_data_t *common_data,
     void **);
@@ -162,4 +161,15 @@ void btx_call_callbacks_read_params(
   if (s)
     (*((btx_dispatch_read_params_f(*))(s->dispatcher)))(
         s->callbacks, common_data, usr_data, usr_params);
+}
+
+void btx_register_matching_callbacks_event_dispatcher(
+  void *btx_handle, matching_callbacks_event_dispatcher_f *dispatcher) {
+  
+  // Look-up our dispatcher
+  matching_callbacks_event_dispatcher_f **matching_callbacks_event_dispatcher =
+      &((common_data_t *)btx_handle)->matching_callbacks_event_dispatcher;
+
+  assert(*matching_callbacks_event_dispatcher == NULL && "Only one dispatcher for matching_callbacks_event_dispatcher");
+  *matching_callbacks_event_dispatcher = dispatcher;
 }
